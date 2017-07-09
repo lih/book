@@ -1,0 +1,8 @@
+#!/bin/bash
+function C.book.arg() { C.fileIn -e . "$@"; }
+function C.book() {
+    C.wordOf 4 cmd link file script \
+             C.book.mark \
+             C.repeat C.book.arg
+}
+C.book "$@"

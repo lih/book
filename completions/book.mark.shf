@@ -1,0 +1,4 @@
+#!/bin/bash
+function C.book.isMark() { [ -f "$1/CMD" ]; }
+function C.book.mark() { C.fileIn C.book.isMark ~/bookmarks "$@"; }
+C.book.mark "$@"

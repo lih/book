@@ -1,0 +1,42 @@
+#!/bin/bash
+: "${BOOKMARKS:=$HOME/bookmarks}"
+
+type="$1"
+name="$2"
+root="$BOOKMARKS/$name"
+shift 2
+mkdir -p "$root"
+case "$type" in
+    cmd)
+	args=( "${@//\'/\'\\\'\'}" )
+	args=( "${args[@]/#/\'}" )
+	args=( "${args[@]/%/\'}" )
+	echo "${args[@]}" > "$root/CMD"
+	;;
+    
+    script)
+	cat > "$root/CMD"
+	;;
+    
+    link)
+	echo "$1" > "$root/LINK"
+	echo "firefox '$1'" > "$root/CMD"
+	;;
+    
+    file)
+	case "$1" in
+	    /*) qname="$1" ;;
+	    *) qname="$PWD/$1" ;;
+	esac
+	case "$1" in
+	    *.pdf) prog=epdfview ;;
+	    *.doc|*.odt|*.ods) prog=libreoffice ;;
+	    *.mp4|*.avi|*.mkv) prog=Vlc ;;
+	    *.exe) prog=wine;;
+	    *.exe.sa) prog=wine-standalone; qname="${qname%.sa}";;
+	    *) prog=emacsclient;;
+	esac
+	echo "$qname" > "$root/PATH"
+	echo "$prog '${qname//'/\'\\\'\'}'" > "$root/CMD"
+	;;
+esac

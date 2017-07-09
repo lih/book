@@ -1,0 +1,3 @@
+#!/bin/bash
+function C.jump() { C.repeat C.book.mark; }
+C.jump "$@"

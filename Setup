@@ -1,0 +1,6 @@
+#!/usr/bin/setup
+# -*- mode: shell-script -*-
+Setup.use Pkg
+
+Pkg.package Pkg.files usr/bin/book=book usr/bin/jump=jump \
+	    $(for comp in completions/*; do echo "usr/share/bash/$comp"="$comp"; done)

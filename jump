@@ -1,0 +1,10 @@
+#!/bin/bash
+: "${BOOKMARKS:=$HOME/bookmarks}"
+for name; do
+    root="$BOOKMARKS/$name"
+    if [ "$DISPLAY" ] && [ ! -t 1 ] && [ -e "$root/INTERACTIVE" ]; then
+	xterm -e "bash '$root/CMD'"
+    else
+	bash "$root/CMD"
+    fi
+done
