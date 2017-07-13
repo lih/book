@@ -1,8 +1,10 @@
 #!/usr/bin/setup
-Setup.use Pkg
-
-Pkg.package Pkg.files usr/bin/book=book usr/bin/jump=jump \
-	    $(for comp in completions/*; do echo "usr/share/bash/$comp"="$comp"; done)
+if Setup.params -package; then
+    Setup.use Pkg
+    
+    Pkg.package Pkg.files usr/bin/book=book usr/bin/jump=jump \
+	        $(for comp in completions/*; do echo "usr/share/bash/$comp"="$comp"; done)
+fi
 
 # Local Variables:
 # mode: shell-script
